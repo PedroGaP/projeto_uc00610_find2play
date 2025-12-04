@@ -2,17 +2,10 @@ import {
   Container,
   SimpleGrid,
   Title,
-  Card,
-  Image,
   Text,
-  AspectRatio,
-  Overlay,
-  Center,
-  Badge,
   Group,
   Button,
 } from "@mantine/core";
-import { IconPlayerPlay } from "@tabler/icons-react";
 import { useGamesContext, type GameType } from "../context/use_games_context";
 import { GameCard } from "./GameCard";
 

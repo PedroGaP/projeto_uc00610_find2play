@@ -139,6 +139,7 @@ export function GamesProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     getTrendingGames().then((games) => setTrendingGames(games.slice(0, 12)));
     getFavoriteGames().then((games) => setFavoriteGames(games));
+    setGames([] as GameType[]);
   }, []);
 
   return (
