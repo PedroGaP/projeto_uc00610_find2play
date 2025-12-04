@@ -4,18 +4,22 @@ import {
   Anchor,
   AppShell,
   ActionIcon,
-  useMantineColorScheme,
-  useComputedColorScheme,
-  Avatar,
-  Badge,
+  Tooltip,
+  Indicator,
+  Menu,
+  Center,
 } from "@mantine/core";
-import { IconSun, IconMoon, IconDeviceGamepad2 } from "@tabler/icons-react";
+import {
+  IconChevronDown,
+  IconDeviceGamepad2,
+  IconHeart,
+} from "@tabler/icons-react";
+import { useGamesContext } from "../context/use_games_context";
+import { useNavigate } from "react-router-dom";
 
 export function Header() {
-  const { setColorScheme } = useMantineColorScheme();
-  const computedColorScheme = useComputedColorScheme("light", {
-    getInitialValueInEffect: true,
-  });
+  const { favoriteGames, genres } = useGamesContext();
+  const navigate = useNavigate();
 
   return (
     <AppShell.Header
@@ -30,9 +34,9 @@ export function Header() {
         top: 0,
         zIndex: 100,
       }}
+      my="0"
     >
       <Group justify="space-between">
-        {/* Logo */}
         <Group gap="xs" style={{ cursor: "pointer" }}>
           <IconDeviceGamepad2 size={32} color="#09c8ff" />
           <Text
@@ -52,8 +56,6 @@ export function Header() {
             Play
           </Text>
         </Group>
-
-        {/* Main Navigation */}
         <Group gap="xl" visibleFrom="md">
           <Anchor
             href="#"
@@ -63,8 +65,37 @@ export function Header() {
             fz="sm"
             style={{ textTransform: "uppercase", letterSpacing: 1 }}
           >
-            Library
+            Biblioteca
           </Anchor>
+          <Menu>
+            <Menu.Target>
+              <Anchor
+                href="#"
+                c="dimmed"
+                fw={600}
+                underline="never"
+                fz="sm"
+                style={{ textTransform: "uppercase", letterSpacing: 1 }}
+              >
+                <Center>
+                  Gêneros
+                  <IconChevronDown />
+                </Center>
+              </Anchor>
+            </Menu.Target>
+            <Menu.Dropdown style={{ maxHeight: "400px", overflowY: "auto" }}>
+              {genres.map((genre) => (
+                <Menu.Item
+                  key={genre.key}
+                  onClick={() =>
+                    navigate(`/games`, { state: { genre: genre.key } })
+                  }
+                >
+                  {genre.value}
+                </Menu.Item>
+              ))}
+            </Menu.Dropdown>
+          </Menu>
           <Anchor
             href="#"
             c="dimmed"
@@ -73,66 +104,24 @@ export function Header() {
             fz="sm"
             style={{ textTransform: "uppercase", letterSpacing: 1 }}
           >
-            Community
-          </Anchor>
-          <Anchor
-            href="#"
-            c="dimmed"
-            fw={600}
-            underline="never"
-            fz="sm"
-            style={{ textTransform: "uppercase", letterSpacing: 1 }}
-          >
-            Leaderboard
-          </Anchor>
-          <Anchor
-            href="#"
-            c="dimmed"
-            fw={600}
-            underline="never"
-            fz="sm"
-            style={{ textTransform: "uppercase", letterSpacing: 1 }}
-          >
-            Support
+            Sobre
           </Anchor>
         </Group>
 
-        {/* User Profile & Actions */}
         <Group gap="md">
-          <Group
-            gap="xs"
-            bg="rgba(255,255,255,0.05)"
-            p={4}
-            style={{ borderRadius: 50, paddingRight: 15 }}
-          >
-            <Avatar
-              src="https://images.unsplash.com/photo-1566492031773-4f4e44671857?auto=format&fit=crop&q=80&w=100"
-              radius="xl"
-              size="sm"
-            />
-            <Text size="xs" fw={700} c="white">
-              Player 1
-            </Text>
-            <Badge size="xs" color="yellow" variant="filled">
-              LVL 99
-            </Badge>
-          </Group>
-
-          <ActionIcon
-            onClick={() =>
-              setColorScheme(computedColorScheme === "light" ? "dark" : "light")
-            }
-            variant="transparent"
-            size="lg"
-            aria-label="Toggle color scheme"
-            c="dimmed"
-          >
-            {computedColorScheme === "light" ? (
-              <IconMoon size={20} />
-            ) : (
-              <IconSun size={20} />
-            )}
-          </ActionIcon>
+          <Tooltip label="Gostos">
+            <ActionIcon
+              onClick={() => null}
+              variant="transparent"
+              size="xl"
+              aria-label="Toggle color scheme"
+              c="dimmed"
+            >
+              <Indicator label={favoriteGames.length}>
+                <IconHeart />
+              </Indicator>
+            </ActionIcon>
+          </Tooltip>
         </Group>
       </Group>
     </AppShell.Header>

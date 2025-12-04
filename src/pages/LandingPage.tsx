@@ -8,7 +8,7 @@ export function LandingPage() {
   return (
     <AppShell header={{ height: 80 }} style={{ backgroundColor: "#060826" }}>
       <Header />
-      <AppShell.Main>
+      <AppShell.Main py="0">
         <Box bg="#060826" style={{ minHeight: "100vh" }}>
           <Hero />
           <SearchWidget />

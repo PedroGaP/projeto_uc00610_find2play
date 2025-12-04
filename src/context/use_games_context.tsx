@@ -1,4 +1,9 @@
-import { getTrendingGames } from "@/services/games_service";
+import {
+  addFavoriteGame,
+  getFavoriteGames,
+  getTrendingGames,
+  removeFavoriteGame,
+} from "@/services/games_service";
 import {
   createContext,
   useContext,
@@ -35,8 +40,10 @@ type GamesType = {
   search: string;
   trendingGames: GameType[];
   filteredGames: GameType[];
+  favoriteGames: number[];
   setSearch: (search: string) => void;
   filterGames: (param: SearchParams) => void;
+  toggleFavoriteGame: (gameId: number) => void;
 };
 
 const GamesContext = createContext({} as GamesType);
@@ -100,9 +107,10 @@ export function GamesProvider({ children }: { children: ReactNode }) {
     { key: "alphabetical", value: "Alfabeticamente" },
     { key: "relevance", value: "Relevância" },
   ];
-  const [games, setGames] = useState<GameType[]>([]);
-  const [filteredGames, setFilteredGames] = useState<GameType[]>([]);
-  const [trendingGames, setTrendingGames] = useState<GameType[]>([]);
+  const [games, setGames] = useState([] as GameType[]);
+  const [favoriteGames, setFavoriteGames] = useState([] as number[]);
+  const [filteredGames, setFilteredGames] = useState([] as GameType[]);
+  const [trendingGames, setTrendingGames] = useState([] as GameType[]);
   const [search, setSearch] = useState("");
 
   const filterGames = (params: SearchParams) => {
@@ -117,8 +125,20 @@ export function GamesProvider({ children }: { children: ReactNode }) {
     );
   };
 
+  const toggleFavoriteGame = async (gameId: number) => {
+    if (favoriteGames.includes(gameId)) {
+      await removeFavoriteGame(gameId);
+      setFavoriteGames((prev) => prev.filter((id) => id !== gameId));
+      return;
+    }
+
+    await addFavoriteGame(gameId);
+    setFavoriteGames((prev) => [...prev, gameId]);
+  };
+
   useEffect(() => {
-    getTrendingGames().then((games) => setTrendingGames(games));
+    getTrendingGames().then((games) => setTrendingGames(games.slice(0, 12)));
+    getFavoriteGames().then((games) => setFavoriteGames(games));
   }, []);
 
   return (
@@ -131,8 +151,10 @@ export function GamesProvider({ children }: { children: ReactNode }) {
         search,
         filteredGames,
         trendingGames,
+        favoriteGames,
         setSearch,
         filterGames,
+        toggleFavoriteGame,
       }}
     >
       {children}
