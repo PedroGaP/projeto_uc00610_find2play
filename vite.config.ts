@@ -19,14 +19,13 @@ export default defineConfig({
       "@assets": path.resolve(__dirname, "./src/assets"),
     },
   },
-  /*server: {
+  server: {
     proxy: {
       "/api": {
-        target: "https://www.freetogame.com",
+        target: "https://www.freetogame.com/api",
         changeOrigin: true,
-        secure: true,
-        rewrite: (path) => path.replace(/^\/api/, "/api"),
+        rewrite: (p) => p.replace(/^\/api/, ""),
       },
     },
-  },*/
+  },
 });

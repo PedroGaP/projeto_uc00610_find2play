@@ -15,6 +15,7 @@
     "@mantine/hooks": "^8.3.9",
     "@mantine/notifications": "^8.3.9",
     "@tabler/icons-react": "^3.35.0",
+    "@vercel/node": "^5.5.15",
     "comboios": "^1.0.1",
     "embla-carousel": "^8.6.0",
     "embla-carousel-react": "^8.6.0",
