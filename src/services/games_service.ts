@@ -2,12 +2,15 @@ import { notifications } from "@mantine/notifications";
 import type { GameType } from "../context/use_games_context";
 
 export const getTrendingGames = async (): Promise<GameType[]> => {
-  let data = await fetch("/api/games?sort-by=relevance", {
-    method: "GET",
-    headers: {
-      "Content-Type": "application/json",
-    },
-  });
+  let data = await fetch(
+    "https://www.freetogame.com/api/games?sort-by=relevance",
+    {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }
+  );
 
   let response: GameType[] = await data.json();
 
@@ -34,7 +37,7 @@ export const getTrendingGames = async (): Promise<GameType[]> => {
 
 export const getGameDetails = async (id: string): Promise<GameType | null> => {
   try {
-    let data = await fetch(`/api/game?id=${id}`, {
+    let data = await fetch(`https://www.freetogame.com/api/game?id=${id}`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
