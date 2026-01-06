@@ -9,9 +9,11 @@ import {
 import { GameCard } from "./GameCard";
 import { useGamesContext } from "@/context/use_games_context";
 import type { GameType } from "@/types/GameType";
+import { useNavigate } from "react-router-dom";
 
 export function FeaturedGames() {
   const { trendingGames } = useGamesContext();
+  const navigate = useNavigate();
 
   return (
     <Container size="xl" py={80} id="games">
@@ -30,7 +32,11 @@ export function FeaturedGames() {
             Populares
           </Text>
         </Title>
-        <Button variant="subtle" color="brand">
+        <Button
+          variant="subtle"
+          color="brand"
+          onClick={() => navigate("/games")}
+        >
           Ver Todos
         </Button>
       </Group>

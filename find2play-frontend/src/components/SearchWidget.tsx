@@ -90,9 +90,9 @@ export function SearchWidget() {
                 }}
               />
               <Select
-                onChange={(value) =>
-                  setPlatform(value?.length > 0 ? value : "null")
-                }
+                onChange={(value) => {
+                  setPlatform(value?.length ? value : "null");
+                }}
                 placeholder="Plataforma"
                 data={platforms.map(
                   (platform: Record<string, string>) => platform.value

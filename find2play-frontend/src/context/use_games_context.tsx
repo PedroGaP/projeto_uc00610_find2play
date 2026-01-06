@@ -5,6 +5,7 @@ import {
   getTrendingGames,
   removeFavoriteGame,
 } from "@/services/games_service";
+import type { GamesType } from "@/types/GamesType";
 import type { GameType } from "@/types/GameType";
 import type { SearchParams } from "@/types/SearchParams";
 import {
@@ -86,18 +87,14 @@ export function GamesProvider({ children }: { children: ReactNode }) {
   const [search, setSearch] = useState("");
 
   const translateGenre = (genreKey: string): string => {
-    console.log(`genreKey: ${genreKey}`);
     const genre = genres.find(
       (g) => g.key.toLocaleLowerCase() === genreKey.toLocaleLowerCase()
     );
-    console.log(`genre: ${genre?.value}`);
     return genre != null ? genre.value : genreKey;
   };
 
   const filterGames = (params: SearchParams) => {
     const filtered = games.filter((game) => {
-      // FILTRO DE GÊNERO
-      // Só filtra se params.genre existir e não estiver vazio
       const hasGenreFilter = params.genre && params.genre.length > 0;
       const matchGenre = hasGenreFilter
         ? params.genre.some((g: any) => {
@@ -106,23 +103,15 @@ export function GamesProvider({ children }: { children: ReactNode }) {
           })
         : true;
 
-      // FILTRO DE PLATAFORMA
-      // Verifica se params.platform existe e não é apenas uma string vazia
       const matchPlatform =
         params.platform && params.platform.trim() !== ""
           ? game.platform.toLowerCase().includes(params.platform.toLowerCase())
           : true;
 
-      // FILTRO DE TÍTULO
-      // .trim() remove espaços em branco que podem causar falsos negativos
       const matchTitle =
         params.title && params.title.trim() !== ""
           ? game.title.toLowerCase().includes(params.title.toLowerCase())
           : true;
-
-      console.log(
-        `Título: ${game.title} | Busca: ${params.title} | Match: ${matchTitle}`
-      );
 
       return matchGenre && matchPlatform && matchTitle;
     });

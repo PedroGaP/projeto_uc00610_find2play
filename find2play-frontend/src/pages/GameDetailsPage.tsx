@@ -19,12 +19,7 @@ import {
   Overlay,
   SimpleGrid,
 } from "@mantine/core";
-import {
-  IconArrowLeft,
-  IconBrowser,
-  IconHeart,
-  IconHeartFilled,
-} from "@tabler/icons-react";
+import { IconArrowLeft, IconHeart, IconHeartFilled } from "@tabler/icons-react";
 import { Header } from "../components/Header";
 import { getGameDetails } from "../services/games_service";
 import { useGamesContext } from "../context/use_games_context";

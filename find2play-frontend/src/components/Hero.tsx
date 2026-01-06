@@ -12,8 +12,11 @@ import {
 } from "@mantine/core";
 import { IconPlayerPlay, IconInfoCircle } from "@tabler/icons-react";
 import heroImage from "@assets/hero_wallpaper.avif";
+import { useNavigate } from "react-router-dom";
 
 export function Hero() {
+  const navigate = useNavigate();
+
   return (
     <Box pos="relative" h={800}>
       <BackgroundImage
@@ -63,6 +66,7 @@ export function Hero() {
               </Text>
               <Group mt="xl" gap="lg">
                 <Button
+                  onClick={() => navigate("/games")}
                   size="xl"
                   radius="md"
                   color="brand"
@@ -72,6 +76,7 @@ export function Hero() {
                   Começa a tua jornada
                 </Button>
                 <Button
+                  onClick={() => navigate("/favorites")}
                   size="xl"
                   radius="md"
                   variant="outline"

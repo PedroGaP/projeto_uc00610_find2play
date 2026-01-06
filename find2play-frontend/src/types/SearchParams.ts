@@ -1,5 +1,5 @@
 export type SearchParams = {
-  genre: string[];
+  genre: Record<string, string>[];
   platform: string;
   title: string;
 };

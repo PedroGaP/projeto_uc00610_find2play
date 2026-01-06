@@ -13,4 +13,5 @@ export type GamesType = {
   setSearch: (search: string) => void;
   filterGames: (param: SearchParams) => void;
   toggleFavoriteGame: (gameId: number) => void;
+  translateGenre: (genre: string) => void;
 };

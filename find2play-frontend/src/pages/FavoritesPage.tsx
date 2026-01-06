@@ -12,25 +12,25 @@ import {
   Text,
 } from "@mantine/core";
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
 
 export default function FavoritesPage() {
   const { favoriteGames } = useGamesContext();
   const [games, setGames] = useState<GameType[]>([]);
-  const navigate = useNavigate();
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchFavoriteGames = async () => {
       if (!loading) setLoading(true);
       console.log("Fetching favorite games details...");
-      const favoriteGamesDetails: GameType[] = await Promise.all(
-        favoriteGames.map(
-          async (id: number) => await getGameDetails(id.toString())
-        )
-      );
+      const favoriteGamesDetails: (GameType | null)[] =
+        (await Promise.all(
+          favoriteGames.map(
+            async (id: number) => await getGameDetails(id.toString())
+          )
+        )) ?? [];
 
-      favoriteGamesDetails.forEach((e: GameType) => {
+      favoriteGamesDetails.forEach((e: GameType | null) => {
+        if (e == null) return;
         e.genre =
           genres.find(
             (g) => g.key.toLocaleLowerCase() === e.genre.toLocaleLowerCase()
@@ -66,7 +66,7 @@ export default function FavoritesPage() {
         <Header />
         <AppShell.Main>
           <Center h="100vh" bg="#060826">
-            <Text c="white" size="xl" align="center">
+            <Text c="white" size="xl">
               Ainda não há jogos favoritos.
               <br /> Vá até a página de jogos para adicionar favoritos.
             </Text>

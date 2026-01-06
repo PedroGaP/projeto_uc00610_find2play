@@ -93,7 +93,7 @@ export function Header() {
                 <Menu.Item
                   key={genre.key}
                   onClick={() =>
-                    navigate(`/games`, { state: { genre: genre.key } })
+                    navigate(`/games`, { state: { genre: [genre] } })
                   }
                 >
                   {genre.value}
@@ -101,16 +101,6 @@ export function Header() {
               ))}
             </Menu.Dropdown>
           </Menu>
-          <Anchor
-            href="#"
-            c="dimmed"
-            fw={600}
-            underline="never"
-            fz="sm"
-            style={{ textTransform: "uppercase", letterSpacing: 1 }}
-          >
-            Sobre
-          </Anchor>
         </Group>
 
         <Group gap="md">

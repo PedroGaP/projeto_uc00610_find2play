@@ -29,7 +29,7 @@ export function GameListPage() {
   const [activePage, setActivePage] = useState(1);
   const location = useLocation();
 
-  const genre: string[] = location.state?.genre || [];
+  const genre: Record<string, string>[] = location.state?.genre || [];
   const platform = location.state?.platform;
   const title = location.state?.title;
 
@@ -63,7 +63,7 @@ export function GameListPage() {
         <Header />
         <AppShell.Main>
           <Center h="100vh" bg="#060826">
-            <Text c="white" size="xl" align="center">
+            <Text c="white" size="xl">
               Ainda não existem jogos disponíveis para a sua pesquisa.
             </Text>
           </Center>
