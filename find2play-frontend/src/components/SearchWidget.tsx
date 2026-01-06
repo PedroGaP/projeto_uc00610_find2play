@@ -21,7 +21,7 @@ import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 
 export function SearchWidget() {
-  const [genre, setGenre] = useState([]);
+  const [genre, setGenre] = useState<Record<string, string>[]>([]);
   const [platform, setPlatform] = useState("");
   const [title, setTitle] = useState("");
   const { genres, platforms } = useGamesContext();
