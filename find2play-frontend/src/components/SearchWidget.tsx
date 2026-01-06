@@ -69,8 +69,6 @@ export function SearchWidget() {
                     (g: Record<string, string>) => value.includes(g.value)
                   );
 
-                  console.log(selectedGenres);
-
                   setGenre(selectedGenres);
                 }}
                 variant="filled"

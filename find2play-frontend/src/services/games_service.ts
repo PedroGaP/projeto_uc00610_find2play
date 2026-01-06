@@ -2,11 +2,12 @@ import { genres } from "@/context/use_games_context";
 import type { GameType } from "@/types/GameType";
 import { notifications } from "@mantine/notifications";
 
-//const GAMES_URL: string = "https://api.find2play.grod.ovh/api/games?sort-by=relevance";
-//const SINGLE_GAME_URL: string = "https://api.find2play.grod.ovh/api/game";
+const GAMES_URL: string =
+  "https://api.find2play.grod.ovh/api/games?sort-by=relevance";
+const SINGLE_GAME_URL: string = "https://api.find2play.grod.ovh/api/game";
 
-const GAMES_URL: string = "http://localhost:3001/api/games?sort-by=relevance";
-const SINGLE_GAME_URL: string = "http://localhost:3001/api/game";
+//const GAMES_URL: string = "http://localhost:3001/api/games?sort-by=relevance";
+//const SINGLE_GAME_URL: string = "http://localhost:3001/api/game";
 
 export const getAllGames = async (): Promise<GameType[]> => {
   let data = await fetch(GAMES_URL, {
@@ -34,13 +35,6 @@ export const getAllGames = async (): Promise<GameType[]> => {
   }
 
   let allGames: GameType[] = response;
-
-  /*allGames.forEach((e) => {
-    e.genre =
-      genres.find(
-        (g) => g.key.toLocaleLowerCase() === e.genre.toLocaleLowerCase()
-      )?.value || e.genre;
-  });*/
 
   return allGames;
 };

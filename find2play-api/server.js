@@ -16,7 +16,6 @@ app.get("/api/games", async (req, res) => {
     const data = await response.json();
     res.json(data);
   } catch (err) {
-    console.error(err);
     res.status(500).json({ error: "Failed to fetch games" });
   }
 });
@@ -30,7 +29,6 @@ app.get("/api/game", async (req, res) => {
     const data = await response.json();
     res.json(data);
   } catch (err) {
-    console.error(err);
     res.status(500).json({ error: "Failed to fetch game details" });
   }
 });

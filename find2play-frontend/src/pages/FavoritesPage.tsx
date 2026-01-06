@@ -21,7 +21,6 @@ export default function FavoritesPage() {
   useEffect(() => {
     const fetchFavoriteGames = async () => {
       if (!loading) setLoading(true);
-      console.log("Fetching favorite games details...");
       const favoriteGamesDetails: (GameType | null)[] =
         (await Promise.all(
           favoriteGames.map(
@@ -58,9 +57,6 @@ export default function FavoritesPage() {
   }
 
   if (games.length === 0) {
-    console.log("No favorite games found.");
-    console.log(games);
-    console.log(favoriteGames);
     return (
       <AppShell header={{ height: 80 }} style={{ backgroundColor: "#060826" }}>
         <Header />
