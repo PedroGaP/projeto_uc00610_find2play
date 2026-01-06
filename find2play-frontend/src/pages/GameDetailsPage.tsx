@@ -27,25 +27,14 @@ import {
 } from "@tabler/icons-react";
 import { Header } from "../components/Header";
 import { getGameDetails } from "../services/games_service";
-import { useGamesContext, type GameType } from "../context/use_games_context";
+import { useGamesContext } from "../context/use_games_context";
 import { Carousel } from "@mantine/carousel";
-
-interface GameDetailsType extends GameType {
-  description: string;
-  minimum_system_requirements?: {
-    os: string;
-    processor: string;
-    memory: string;
-    graphics: string;
-    storage: string;
-  };
-  screenshots: { id: number; image: string }[];
-  status: string;
-}
+import type GameDetailsType from "@/types/GameDetailsType";
 
 export function GameDetailsPage() {
   const { id } = useParams();
-  const { favoriteGames, toggleFavoriteGame } = useGamesContext();
+  const { favoriteGames, toggleFavoriteGame, translateGenre } =
+    useGamesContext();
   const navigate = useNavigate();
   const [game, setGame] = useState<GameDetailsType | null>(null);
   const [loading, setLoading] = useState(true);
@@ -168,7 +157,7 @@ export function GameDetailsPage() {
                       </Title>
                       <Group>
                         <Badge size="lg" color="brand" variant="filled">
-                          {game.genre}
+                          {translateGenre(game.genre)}
                         </Badge>
                         <Badge size="lg" color="gray" variant="outline">
                           {game.platform}
@@ -224,7 +213,7 @@ export function GameDetailsPage() {
                       <SimpleGrid cols={{ base: 1, sm: 2 }} spacing="md">
                         <Box>
                           <Text c="brand" fw={700}>
-                            Sistema Operacional
+                            Sistema Operatiivo
                           </Text>
                           <Text c="gray.4">
                             {game.minimum_system_requirements.os}
@@ -305,7 +294,6 @@ export function GameDetailsPage() {
                     size="xl"
                     color="brand"
                     fullWidth
-                    rightSection={<IconBrowser size={20} />}
                     style={{ boxShadow: "0 0 20px rgba(9, 200, 255, 0.3)" }}
                   >
                     Jogar Agora

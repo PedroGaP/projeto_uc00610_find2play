@@ -17,9 +17,19 @@ import {
   IconFilter,
 } from "@tabler/icons-react";
 import { useGamesContext } from "@/context/use_games_context";
+import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 
 export function SearchWidget() {
+  const [genre, setGenre] = useState([]);
+  const [platform, setPlatform] = useState("");
+  const [title, setTitle] = useState("");
   const { genres, platforms } = useGamesContext();
+  const navigate = useNavigate();
+
+  const handleSearchClick = () => {
+    navigate("/games", { state: { genre, platform, title } });
+  };
 
   return (
     <Container size="xl" mt={-120} pos="relative" style={{ zIndex: 3 }}>
@@ -50,8 +60,19 @@ export function SearchWidget() {
             >
               <MultiSelect
                 placeholder="Género"
-                data={genres.map((genre) => genre.value)}
+                data={genres.map(
+                  (genre: Record<string, string>) => genre.value
+                )}
                 leftSection={<IconDeviceGamepad size={18} color="#09c8ff" />}
+                onChange={(value: string[]) => {
+                  const selectedGenres = genres.filter(
+                    (g: Record<string, string>) => value.includes(g.value)
+                  );
+
+                  console.log(selectedGenres);
+
+                  setGenre(selectedGenres);
+                }}
                 variant="filled"
                 size="md"
                 radius="md"
@@ -69,8 +90,13 @@ export function SearchWidget() {
                 }}
               />
               <Select
+                onChange={(value) =>
+                  setPlatform(value?.length > 0 ? value : "null")
+                }
                 placeholder="Plataforma"
-                data={platforms.map((platform) => platform.value)}
+                data={platforms.map(
+                  (platform: Record<string, string>) => platform.value
+                )}
                 leftSection={<IconDeviceDesktop size={18} color="#09c8ff" />}
                 variant="filled"
                 size="md"
@@ -101,6 +127,7 @@ export function SearchWidget() {
                     color: "white",
                   },
                 }}
+                onChange={(event) => setTitle(event.currentTarget.value)}
               />
               <Button
                 color="brand"
@@ -109,6 +136,7 @@ export function SearchWidget() {
                 fullWidth
                 leftSection={<IconSearch size={20} />}
                 style={{ boxShadow: "0 0 15px rgba(9, 200, 255, 0.3)" }}
+                onClick={handleSearchClick}
               >
                 Procurar jogos
               </Button>

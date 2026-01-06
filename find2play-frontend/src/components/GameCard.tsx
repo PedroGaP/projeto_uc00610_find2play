@@ -1,3 +1,5 @@
+import { useGamesContext } from "@/context/use_games_context";
+import type { GameType } from "@/types/GameType";
 import {
   AspectRatio,
   Badge,
@@ -10,11 +12,11 @@ import {
   Image,
 } from "@mantine/core";
 import { IconPlayerPlay } from "@tabler/icons-react";
-import { type GameType } from "../context/use_games_context";
 import { useNavigate } from "react-router-dom";
 
 export function GameCard({ game }: { game: GameType }) {
   const navigate = useNavigate();
+  const { translateGenre } = useGamesContext();
 
   return (
     <Card
@@ -50,7 +52,7 @@ export function GameCard({ game }: { game: GameType }) {
         >
           <Group justify="space-between" w="100%" mb="xs">
             <Badge color="brand" variant="filled">
-              {game.genre}
+              {translateGenre(game.genre)}
             </Badge>
           </Group>
           <Title order={3} c="white" size="h4">

@@ -37,7 +37,11 @@ export function Header() {
       my="0"
     >
       <Group justify="space-between">
-        <Group gap="xs" style={{ cursor: "pointer" }}>
+        <Group
+          gap="xs"
+          style={{ cursor: "pointer" }}
+          onClick={() => navigate("/")}
+        >
           <IconDeviceGamepad2 size={32} color="#09c8ff" />
           <Text
             fw={900}
@@ -65,7 +69,7 @@ export function Header() {
             fz="sm"
             style={{ textTransform: "uppercase", letterSpacing: 1 }}
           >
-            Biblioteca
+            Jogos
           </Anchor>
           <Menu>
             <Menu.Target>
@@ -76,15 +80,16 @@ export function Header() {
                 underline="never"
                 fz="sm"
                 style={{ textTransform: "uppercase", letterSpacing: 1 }}
+                onClick={(e) => e.preventDefault()}
               >
                 <Center>
-                  Gêneros
+                  Géneros
                   <IconChevronDown />
                 </Center>
               </Anchor>
             </Menu.Target>
             <Menu.Dropdown style={{ maxHeight: "400px", overflowY: "auto" }}>
-              {genres.map((genre) => (
+              {genres.map((genre: Record<string, string>) => (
                 <Menu.Item
                   key={genre.key}
                   onClick={() =>
@@ -111,7 +116,7 @@ export function Header() {
         <Group gap="md">
           <Tooltip label="Gostos">
             <ActionIcon
-              onClick={() => null}
+              onClick={() => navigate("/favorites")}
               variant="transparent"
               size="xl"
               aria-label="Toggle color scheme"

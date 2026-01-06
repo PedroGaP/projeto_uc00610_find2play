@@ -1,8 +1,52 @@
+import { genres } from "@/context/use_games_context";
+import type { GameType } from "@/types/GameType";
 import { notifications } from "@mantine/notifications";
-import type { GameType } from "../context/use_games_context";
+
+//const GAMES_URL: string = "https://api.find2play.grod.ovh/api/games?sort-by=relevance";
+//const SINGLE_GAME_URL: string = "https://api.find2play.grod.ovh/api/game";
+
+const GAMES_URL: string = "http://localhost:3001/api/games?sort-by=relevance";
+const SINGLE_GAME_URL: string = "http://localhost:3001/api/game";
+
+export const getAllGames = async (): Promise<GameType[]> => {
+  let data = await fetch(GAMES_URL, {
+    method: "GET",
+  });
+
+  let response: GameType[] = await data.json();
+
+  if (data.status != 200) {
+    notifications.show({
+      title: "Erro!",
+      message: "Erro ao ler os jogos da API.",
+      color: "red",
+    });
+    return [];
+  }
+
+  if (response.length == 0) {
+    notifications.show({
+      title: "Erro!",
+      message: "Nenhum jogo encontrado.",
+      color: "red",
+    });
+    return [];
+  }
+
+  let allGames: GameType[] = response;
+
+  /*allGames.forEach((e) => {
+    e.genre =
+      genres.find(
+        (g) => g.key.toLocaleLowerCase() === e.genre.toLocaleLowerCase()
+      )?.value || e.genre;
+  });*/
+
+  return allGames;
+};
 
 export const getTrendingGames = async (): Promise<GameType[]> => {
-  let data = await fetch("https://api.find2play.grod.ovh/api/games?sort-by=relevance", {
+  let data = await fetch(GAMES_URL, {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
@@ -29,12 +73,21 @@ export const getTrendingGames = async (): Promise<GameType[]> => {
     return [];
   }
 
-  return response;
+  let trending: GameType[] = response;
+
+  trending.forEach((e) => {
+    e.genre =
+      genres.find(
+        (g) => g.key.toLocaleLowerCase() === e.genre.toLocaleLowerCase()
+      )?.value || e.genre;
+  });
+
+  return trending;
 };
 
 export const getGameDetails = async (id: string): Promise<GameType | null> => {
   try {
-    let data = await fetch(`https://api.find2play.grod.ovh/api/game?id=${id}`, {
+    let data = await fetch(`${SINGLE_GAME_URL}?id=${id}`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",

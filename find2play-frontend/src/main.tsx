@@ -9,6 +9,7 @@ import { GameDetailsPage } from "./pages/GameDetailsPage";
 import "@mantine/core/styles.css";
 import "@mantine/carousel/styles.css";
 import { GameListPage } from "./pages/GameListPage";
+import FavoritesPage from "./pages/FavoritesPage";
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
@@ -53,6 +54,7 @@ createRoot(document.getElementById("root")!).render(
             <Route path="/" element={<LandingPage />} />
             <Route path="/game/:id" element={<GameDetailsPage />} />
             <Route path="/games" element={<GameListPage />} />
+            <Route path="/favorites" element={<FavoritesPage />} />
           </Routes>
         </BrowserRouter>
       </MantineProvider>

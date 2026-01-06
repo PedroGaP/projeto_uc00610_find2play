@@ -6,8 +6,9 @@ import {
   Group,
   Button,
 } from "@mantine/core";
-import { useGamesContext, type GameType } from "../context/use_games_context";
 import { GameCard } from "./GameCard";
+import { useGamesContext } from "@/context/use_games_context";
+import type { GameType } from "@/types/GameType";
 
 export function FeaturedGames() {
   const { trendingGames } = useGamesContext();
@@ -24,20 +25,28 @@ export function FeaturedGames() {
             textTransform: "uppercase",
           }}
         >
-          Trending{" "}
+          Jogos{" "}
           <Text span c="brand" inherit>
-            Games
+            Populares
           </Text>
         </Title>
         <Button variant="subtle" color="brand">
-          View All
+          Ver Todos
         </Button>
       </Group>
 
       <SimpleGrid cols={{ base: 1, sm: 2, md: 4 }} spacing="lg">
-        {trendingGames.map((game: GameType) => (
-          <GameCard key={game.id} game={game} />
-        ))}
+        {trendingGames.length > 0 ? (
+          trendingGames.map((game: GameType) => (
+            <GameCard key={game.id} game={game} />
+          ))
+        ) : (
+          <Container flex={1} w={"100vw"} p={0}>
+            <Text span c="brand" inherit>
+              Não existem jogos disponiveis em destaque.
+            </Text>
+          </Container>
+        )}
       </SimpleGrid>
     </Container>
   );
